@@ -76,7 +76,7 @@
       "label": "stop-emulation",
       "type": "shell",
       "command": "killall",
-      "args": ["desmume-cli"],
+      "args": ["melonDS"],
       "problemMatcher": []
     }
   ]
