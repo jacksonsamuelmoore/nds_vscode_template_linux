@@ -11,32 +11,25 @@ Develop Nintendo DS homebrew in a modern Visual Studio Code development environm
 
 Before this template will work, we need to do some homework and install the compiler toolchian, the emulator, and the necessary extensions for our development environment.
 
-**NOTE**: These instructions are for Windows!
+**NOTE**: Forked from [nds_vscode_template](https://github.com/cuibonobo/nds_vscode_template/) these instuctions are for linux
 
 ### devkitPro
 
 **devkitPro** provides a set of compilers and tools so that we can create programs that are compatible with the ARM 7 and ARM 9 processors in the Nintendo DS.
 
-Follow the instructions on the [Getting Started](https://devkitpro.org/wiki/Getting_Started) page to download the Windows graphical installer.
+Follow the instructions on the [Getting Started](https://devkitpro.org/wiki/Getting_Started) page to install devkitPro for you distribution. This will involve setting up pacman as shown [here](https://devkitpro.org/wiki/devkitPro_pacman)
 
-When you run the installer, make sure to leave the default options as is so that the paths in this template point to the correct place.
 
-You can verify that the installation completed successfully by making sure you can see **devkitPro**>**MYSYS** in your Start Menu.
 
-### DeSmuME
+### melonDS
 
-**DeSmuME** is a very stable Nintendo DS emulator that also provides basic tools for debugging our homebrew programs. Per the [DeSmuME FAQ](http://wiki.desmume.org/index.php?title=Faq#Does_the_GDB_stub_still_work.3F), the debugging functions in DeSmuME aren't completely fleshed out, but it works well enough to set breakpoints, step through code, watch memory locations for read/write operations, and other basic operations.
+**melonDS** has been recenlty update with a GDB stub built in (see [this PR](https://github.com/melonDS-emu/melonDS/pull/1583))
 
-For this template we are going to download 2 separate versions of DeSmuME: one for release builds and one for debugging.
+This is not included in the most recent release, so download the most recent nightly build from [github actions](https://github.com/melonDS-emu/melonDS/actions/workflows/build-ubuntu.yml?query=branch%3Amaster). Select the most recent successfull build and download the only artifact `melonDS-ubuntu-x86_64`
 
-  * [DeSmuME 0.9.11 x32](http://sourceforge.net/projects/desmume/files/desmume/0.9.11/desmume-0.9.11-win32.zip/download) (Release emulator)
-  * [DeSmuME 0.9.11 x32 Dev](https://sourceforge.net/projects/desmume/files/desmume/0.9.11/desmume-0.9.11-win32-dev.zip/download) (Development emulator)
+To install, unzip `melonDS-ubuntu-x86_64.zip` and move `melonDS` to the root of this template folder. Allow executing of this file by running `chmod +x melonDS`.
 
-To install, unzip the release emulator to `C:\desmume`. When the unzip is complete, you should have the executable at `C:\desmume\DeSmuME_0.9.11_x86.exe`.
-
-Now for the development emulator, extract it to the same path: `C:\desmume`. Click the "Replace files at the destination" button when it prompts you. When the unzip is complete, the executable should be at `C:\desmume\DeSmuME_0.9.11_x86_dev+.exe`.
-
-Double-click both the release and development emulators to make sure they work correctly. If you get an error about missing `MSVCP100.DLL`, you probably also need to install the x86 version of the [Microsoft Visual C++ 2010 Redistributable Package](http://www.microsoft.com/en-in/download/details.aspx?id=5555).
+Run the emulator once, and open `Config > Emu Settings > Devtools` and check `Enable GDB stub`
 
 ### VS Code
 
@@ -53,7 +46,7 @@ The C++ source code for your Nintendo DS program will go into the `source` direc
 
 The `include` directory has a `vscode_fix.h` file that is used to fix IntelliSense behavior in Visual Studio Code. At the moment IntelliSense isn't smart enough to detect the feature flags that would be set by the compiler, so we add any interfaces that IntelliSense doesn't understand to this file.
 
-For example, the `main.cpp` example code uses the `iprintf` function to print text to the screen. The `iprintf` function is defined in `C:\devkitPro\devkitARM\arm-none-eabi\include\stdio.h`, but it is protected by the `__MISC_VISIBLE` compiler feature. Since IntelliSense doesn't know what features our compiler has, we have to help it along by copying the interface from the `stdio.h` file and into `vscode_fix.h`.
+For example, the `main.cpp` example code uses the `iprintf` function to print text to the screen. The `iprintf` function is defined in `/opt/devkitpro/devkitARM/arm-none-eabi/include/stdio.h`, but it is protected by the `__MISC_VISIBLE` compiler feature. Since IntelliSense doesn't know what features our compiler has, we have to help it along by copying the interface from the `stdio.h` file and into `vscode_fix.h`.
 
 The `vscode_fix.h` file is _only_ used by IntelliSense and will not compile with your code!
 
