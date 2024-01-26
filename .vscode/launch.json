@@ -22,7 +22,7 @@
       },
       "useExtendedRemote": true,
       "miDebuggerPath": "/opt/devkitpro/devkitARM/bin/arm-none-eabi-gdb",
-      "miDebuggerServerAddress": "192.168.1.142:3333",
+      "miDebuggerServerAddress": "localhost:3333",
       "setupCommands": [
         {
           "description": "Enable pretty-printing",

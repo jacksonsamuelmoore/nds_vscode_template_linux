@@ -44,7 +44,7 @@
       "label": "gdb-debug",
       "type": "shell",
       "dependsOn": ["make debug"],
-      "isBackground": false,
+      "isBackground": true,
       "command": "./melonDS",
       "args": [
         //"--arm9gdb=20000",
@@ -54,7 +54,23 @@
         "clear": true,
         "reveal": "always"
       },
-      "problemMatcher": []
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": ".",
+            "endsPattern": "."
+          }
+        }
+      ]
     },
     {
       "label": "stop-emulation",
